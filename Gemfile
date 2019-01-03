@@ -6,6 +6,7 @@ gem 'rails', '4.0.0'
 
 #开发环境
 group :development, :test do
+  gem 'rubyzip', '0.9.9'
   #使用sqlite3作为Active Record的数据库
   gem 'sqlite3','1.3.7'
   #使用RSpec相关的生成器
