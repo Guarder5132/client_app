@@ -3,6 +3,7 @@ source 'https://gems.ruby-china.com'
 ruby '2.0.0'
 
 gem 'rails', '4.0.0'
+gem 'bootstrap-sass', '2.3.2.0'
 
 #开发环境
 group :development, :test do
@@ -21,7 +22,7 @@ group :test do
 end
 
 #将SCSS用于样式表
-gem 'sass-rails',   '4.0.0'
+gem 'sass-rails'
 #使用Uglifier作为JavaScript资源的压缩器
 gem 'uglifier',     '2.1.1'
 #将CoffeeScript用于.js.coffee资产和视图
