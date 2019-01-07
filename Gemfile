@@ -22,6 +22,7 @@ group :test do
   gem 'selenium-webdriver', '2.0.0'
   #允许我们使用类是英语中的句法编写模拟与应用程序交互的代码
   gem 'capybara', '2.1.0'
+  gem 'factory_girl_rails', '4.2.1'
 end
 
 #将SCSS用于样式表
