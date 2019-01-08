@@ -49,6 +49,15 @@ describe "User pages" do
             it "能创建一个用户" do
                 expect { click_button submit }.to change(User, :count).by(1)
             end
+
+            describe "注册用户后" do
+                before { click_button submit }
+                let(:user) { User.find_by(email: 'user@example.com') }
+
+                it { should have_link( '退出' ) }
+                #it { should have_title(user.name) }
+                it { should have_selector('div.alert.alert-success', text: '欢迎使用G微博') }
+            end
         end
     end 
 end

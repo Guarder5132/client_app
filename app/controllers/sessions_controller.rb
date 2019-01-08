@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-    def new 
+    def new
+        render 'new'
     end
 
     def create
@@ -8,12 +9,14 @@ class SessionsController < ApplicationController
             sign_in user
             redirect_to user
         else
-            #flash.now 专门用来重新渲染页面中显示的flash，发送新的请求时，Flash便会消失
-            flash.now[:error] = "电子邮箱或密码无效"
+            flash.now[:error] = '电子邮箱或密码无效' 
             render 'new'
         end
     end
-
+    
     def destroy
+        sign_out
+        redirect_to root_path
     end
+
 end

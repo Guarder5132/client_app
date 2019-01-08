@@ -10,7 +10,8 @@ class UsersController < ApplicationController
   def create 
     @user = User.new(user_params)
     if @user.save
-      flash[:success] = "欢迎您使用 G微博"
+      sign_in @user
+      flash[:success] = "欢迎使用G微博"
       redirect_to @user
     else
       render 'new'

@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
     #把Email地址转换成全小写形式
     before_save { self.email = email.downcase }
-    before_save :create_remember_token
+    before_create :create_remember_token
     #验证name和email属性的存在性
     validates :name,  presence: true, length: { maximum: 50 , minimum:5 }
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
     has_secure_password
     validates :password, length: { minimum: 6 }
 
+    #加密
     def User.new_remember_token
         SecureRandom.urlsafe_base64
     end
