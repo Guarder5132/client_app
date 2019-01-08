@@ -29,14 +29,21 @@ describe "User pages" do
             it "不能创建用户" do
                 expect { click_button submit }.not_to change(User, :count)
             end
+
+            describe "after submission" do
+                before { click_button submit }
+
+                it { should have_title('注册') }
+                it { should have_content('error') }
+            end
         end
 
         describe "有效信息" do
             before do
-                fill_in "用户名",         with: "Guard_tuzi"
-                fill_in "电子邮箱",        with: "Guard@exmaple.com"
+                fill_in "用户名",   with: "Guard_tuzi"
+                fill_in "电子邮箱",  with: "Guard@exmaple.com"
                 fill_in "密码",     with: "Guarder"
-                fill_in "确认密码", with: "Guarder"
+                fill_in "确认密码",  with: "Guarder"
             end
 
             it "能创建一个用户" do

@@ -18,8 +18,14 @@ describe User do
   it {should respond_to(:password_digest)}
   it {should respond_to(:password)}
   it {should respond_to(:password_confirmation)}
+  it {should respond_to(:remember_token)}
   it {should respond_to(:authenticate)}
   it {should be_valid}
+
+  describe "记忆权标值" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
+  end
 
   describe "当名称不存在时" do
     before { @user.name = " " }
@@ -57,12 +63,12 @@ describe User do
     end
 
     describe "当名字太短了" do
-      before { @user.name = "a"*9 }
+      before { @user.name = "a"*4 }
       it { should_not be_valid }
     end
 
     describe "期望最短长度等于10" do
-      before { @user.name = "a"*10 }
+      before { @user.name = "a"*5 }
       it { should be_valid }
     end
   end
