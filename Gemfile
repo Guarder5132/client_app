@@ -7,6 +7,10 @@ gem 'bootstrap-sass', '2.3.2.0'
 gem 'rake', '<11.0'
 #引进最先进的哈西函数bcrypt对密码进行不可逆的保密
 gem 'bcrypt-ruby', '3.0.1'
+gem 'faker', '1.1.2'
+#bootstrap-will_paginate作用是设置will_paginate使用Bootstrap中的分页样式
+gem 'will_paginate', '3.0.4'
+gem 'bootstrap-will_paginate', '0.0.9'
 
 #开发环境
 group :development, :test do

@@ -18,9 +18,22 @@ describe User do
   it {should respond_to(:password_digest)}
   it {should respond_to(:password)}
   it {should respond_to(:password_confirmation)}
-  it { should respond_to(:remember_token) }
+  it {should respond_to(:remember_token) }
   it {should respond_to(:authenticate)}
+  it {should respond_to(:admin)} 
+
   it {should be_valid}
+  it {should_not be_admin}
+
+  describe "将admin属性设置为true" do
+    before do
+      @user.save!
+      #使用toggle！方法 把admin属性的值从false转换成true
+      @user.toggle!(:admin)
+    end
+
+    it { should be_admin }
+  end
 
   describe "记忆权标值" do
     before { @user.save }
@@ -63,12 +76,12 @@ describe User do
     end
 
     describe "当名字太短了" do
-      before { @user.name = "a"*4 }
+      before { @user.name = "a"*1 }
       it { should_not be_valid }
     end
 
     describe "期望最短长度等于10" do
-      before { @user.name = "a"*5 }
+      before { @user.name = "a"*2 }
       it { should be_valid }
     end
   end
