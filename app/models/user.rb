@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
+    #用户拥有多篇微博       dependent: :destroy保证用户的微博在删除用户的同时也会删除
+    has_many :microposts, dependent: :destroy
     #把Email地址转换成全小写形式
     before_save { self.email = email.downcase }
+    #before_create方法引用，当rails执行到这行代码时，回去寻找create_remember_token方法，  在创建用户字前
     before_create :create_remember_token
     #验证name和email属性的存在性
     validates :name,  presence: true, length: { maximum: 50 , minimum:2 }
@@ -20,7 +23,13 @@ class User < ActiveRecord::Base
     end
 
     def User.encrypt(token)
+        #to_s为了处理nil的情况
         Digest::SHA1.hexdigest(token.to_s)
+    end
+
+    def feed
+        # This is preliminary. See "Following users" for the full implementation.
+        Micropost.where("user_id = ?", id)
     end
 
     private

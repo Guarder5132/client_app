@@ -19,6 +19,21 @@ describe "Authentication" do
 
     describe "于非登陆用户" do
       let(:user) { FactoryGirl.create(:user) }
+     
+      describe "in the Microposts controller" do
+
+        #向/microposts发送post请求, 会转向到登陆页面
+        describe "submitting to the create action" do
+          before { post microposts_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        #向/microposts/1发送delete请求, 会转向到登陆页面
+        describe "submitting to the destroy action" do
+          before { delete micropost_path(FactoryGirl.create(:micropost)) }
+          specify { expect(response).to redirect_to(signin_path) } 
+        end
+      end
 
       describe "尝试访问受保护的页面时" do
         before do
@@ -86,6 +101,8 @@ describe "Authentication" do
 
       it { should have_title('登陆') }
       it { should have_selector('div.alert.alert-error', text: '无效') }
+      it { should_not have_title('退出') }
+      it { should_not have_link('退出', href:signout_path)}
 
       describe "在访问另一页后" do
         before { click_link "主页" }
@@ -124,6 +141,4 @@ describe "Authentication" do
       it { should_not have_link('登陆', href: signin_path) }
     end
   end
-
-  
 end

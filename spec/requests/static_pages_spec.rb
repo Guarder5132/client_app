@@ -7,7 +7,7 @@ describe "静态页面" do
   #RSpec提供了一种名为“共享用例” 的辅助功能
   #let方法只要需要就会用指定的值创建一个局部变量
   shared_examples_for "所有静态页面" do
-    it { should have_content(heading) }
+    # it { should have_content(heading) }
     it { should have_title(full_title(page_title)) }
   end
   
@@ -21,8 +21,8 @@ describe "静态页面" do
     expect(page).to have_title(full_title('联系'))
     click_link "主页"
     expect(page).to have_title(full_title(''))
-    click_link "立即注册"
-    expect(page).to have_title(full_title('注册'))
+    # click_link "立即注册"
+    # expect(page).to have_title(full_title('注册'))
     click_link "GWB"
     expect(page).to have_title(full_title(''))
   end
@@ -58,5 +58,21 @@ describe "静态页面" do
     let(:page_title)  { '联系' }
 
     it_should_behave_like "所有静态页面"
+  end
+
+  describe "for signed-in users" do
+    let(:user) {FactoryGirl.create(:user)}
+    before do
+      FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
+      FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
+      sign_in user
+      visit root_path
+    end
+    
+    it "should render the user's feed" do
+      user.feed.each do |item|
+        expect(page).to have_selector("li##{item.id}", text: item.content)
+      end
+    end
   end
 end
