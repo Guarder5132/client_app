@@ -19,6 +19,18 @@ describe "Authentication" do
 
     describe "于非登陆用户" do
       let(:user) { FactoryGirl.create(:user) }
+
+      describe "in thr Relationships controller" do
+        describe "submitting to the create action" do
+          before {post relationships_path}
+          specify {expect(response).to redirect_to(signin_path)}
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete relationship_path(1) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
      
       describe "in the Microposts controller" do
 
@@ -57,6 +69,17 @@ describe "Authentication" do
 
         describe "访问用户索引" do
           before { visit users_path }
+          it { should have_title('登陆') }
+        end
+
+        #测试关注列表和粉丝列表的访问权限
+        describe "visiting the following page" do
+          before { visit following_user_path(user) }
+          it { should have_title('登陆') }
+        end
+
+        describe "visiting the followes page" do
+          before { visit followers_user_path(user) }
           it { should have_title('登陆') }
         end
       end
